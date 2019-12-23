@@ -1,12 +1,15 @@
 package gr.hua.dit.ds.team52.controller;
 
 
-import gr.hua.dit.ds.team52.dao.UserDAO;
+import gr.hua.dit.ds.team52.dao.StaffDAO;
+import gr.hua.dit.ds.team52.entity.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/manager")
@@ -14,7 +17,12 @@ public class ManagerController {
 
         // inject the customer dao
         @Autowired
-        private UserDAO userDao;
+        private StaffDAO staffDAO;
+
+        @RequestMapping("/")
+        public String showMenu(Model model) {
+            return "manager/index-manager";
+        }
 
         @RequestMapping("/user")
         public String userManager(Model model) {
@@ -41,24 +49,21 @@ public class ManagerController {
         @RequestMapping("/service")
         public String serviceManager(Model model) {
             // get services from dao
-//            List<Service> customers = customerDAO.getCustomers();
+            List<Service> services = staffDAO.getServices();
 
             // add the services to the model
-            model.addAttribute("services", null);
+            model.addAttribute("services", services);
 
-            return null; //TODO service manager JSP
+            return "manager/list-services";
         }
 
         @RequestMapping("/service/index")
         public String serviceManagerIndex(WebRequest request,Model model) {
             // get services from dao
-//            List<Customer> customers = customerDAO.getCustomers();
-//            request.getParameter();
-
-            // add the services to the model
-            model.addAttribute("services", null);
-
-            return null; //TODO service manager JSP
+            String title = request.getParameter("selectedService");
+            Service service = staffDAO.searchService(title);
+            model.addAttribute("service", service);
+            return "manager/service-details";
         }
 
 }

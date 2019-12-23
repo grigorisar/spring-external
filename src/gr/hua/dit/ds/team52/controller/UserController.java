@@ -18,7 +18,7 @@ public class UserController {
 
     @RequestMapping("/")
     public String showMyPage() {
-        return "index";
+        return "home/index";
     }
 
     @RequestMapping("/create")

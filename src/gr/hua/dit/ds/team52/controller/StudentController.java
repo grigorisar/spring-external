@@ -1,7 +1,6 @@
 package gr.hua.dit.ds.team52.controller;
 
 import gr.hua.dit.ds.team52.dao.StudentDAO;
-import gr.hua.dit.ds.team52.dao.UserDAO;
 import gr.hua.dit.ds.team52.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ public class StudentController {
         // add the customers to the model
         model.addAttribute("students", students);
 
-        return "list-students";
+        return "student/list-students";
     }
 
 

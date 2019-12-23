@@ -1,6 +1,9 @@
 package gr.hua.dit.ds.team52.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
@@ -14,8 +17,6 @@ public class Student {
     private String lastName;
     @Column(name= "username", nullable = false, length = 50)
     private String username;
-    @Column(name = "password", nullable = false, length = 100)
-    private String password; //TODO delete this column due to mapping with 'user' table
     @Column(name = "dept", nullable = true, length = 45)
     private String dept;
     @Column(name = "year", nullable = true, length = 5)
@@ -46,14 +47,6 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getDept() {
