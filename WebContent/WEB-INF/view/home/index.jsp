@@ -9,13 +9,10 @@
     <title>Insert title here</title>
 </head>
 <body>
-<h1 style="align-content: center">Spring MVC demo project!</h1>
+    <h1 style="align-content: center">Spring MVC demo project!</h1>
     <h3><a href="<c:url value="/showForm"></c:url>">Show Form</a></h3>
-<br/>
-    <h3><a href="<c:url value="/student/list"></c:url>">Show Student Menu</a></h3>
-<br/>
+    <h3><a href="<c:url value="/student/"></c:url>">Show Student Menu</a></h3>
     <h3><a href="<c:url value="/manager/"></c:url>">Show Manager Menu</a></h3>
-<br/>
     <h3><a href="<c:url value="/example"></c:url>">Show CSS Example</a></h3>
 </body>
 </html>
