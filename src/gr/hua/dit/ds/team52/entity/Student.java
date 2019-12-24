@@ -1,29 +1,51 @@
 package gr.hua.dit.ds.team52.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "first_name", nullable = true, length = 45)
+
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name", nullable = true, length = 45)
+
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name= "username", nullable = false, length = 50)
+
+    @Column(name= "username")
     private String username;
-    @Column(name = "dept", nullable = true, length = 45)
+
+    @Column(name = "dept")
     private String dept;
-    @Column(name = "year", nullable = true, length = 5)
-    private String year;
-    @Column(name = "failed", nullable = true)
+
+    @Column(name = "year")
+    private Integer year;
+
+    @Column(name = "failed")
     private Integer failed;
 
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL) //if student gets deleted delete all his petitions
+    private List<Petition> petitions;
+
+    public Student() {
+
+    }
+
+
+    public Student(String firstName,String lastName,String username,String dept,int year,int failed) {
+        this.firstName = firstName;
+        this.lastName= lastName;
+        this.username=username;
+        this.dept=dept;
+        this.year=year;
+        this.failed=failed;
+    }
 
     public int getId() {
         return id;
@@ -57,19 +79,19 @@ public class Student {
         this.dept = dept;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public Integer getFailed() {
+    public int getFailed() {
         return failed;
     }
 
-    public void setFailed(Integer failed) {
+    public void setFailed(int failed) {
         this.failed = failed;
     }
 
@@ -79,5 +101,17 @@ public class Student {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void add(Petition apetition) {
+        if(petitions == null) {
+            petitions = new ArrayList<>();
+        }
+        petitions.add(apetition);
+        apetition.setStudent(this);
+    }
+
+    public boolean canSubmit(){
+        return getYear() >= 3 && getFailed() <= 3;
     }
 }

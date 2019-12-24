@@ -15,6 +15,12 @@ public class HomeController {
         return "home/index";
     }
 
+    @RequestMapping("/example")
+    public String showCSSExample() {
+        return "examples/example";
+    }
+
+
     @RequestMapping("/showForm")
     public String showForm() {
         return "helloworld-form";

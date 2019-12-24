@@ -2,6 +2,7 @@ package gr.hua.dit.ds.team52.dao;
 
 import gr.hua.dit.ds.team52.entity.Petition;
 import gr.hua.dit.ds.team52.entity.Student;
+import gr.hua.dit.ds.team52.entity.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +35,22 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     @Transactional
+    public Boolean saveStudent(Student student) {
+        /**
+         * This function is both an UPDATE and INSERT tool.
+         */
+        Session currentsession=sessionFactory.getCurrentSession();
+
+        if (student.getId()!=0) {
+            currentsession.update(student);
+        }else {
+            currentsession.save(student);
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
     public List<Petition> getPetitions(){
         Session currentSession = sessionFactory.getCurrentSession();
 
@@ -45,4 +62,23 @@ public class StudentDAOImpl implements StudentDAO {
         return Petitions;
     }
 
+    @Override
+    @Transactional
+    public Boolean savePetition(Petition petition,String studentID) {
+        /**
+         * This function is an INSERT tool ONLY.
+         */
+        try {
+            Session currentsession=sessionFactory.getCurrentSession();
+            Student student = currentsession.get(Student.class,studentID);
+            petition.setStudent(student);
+
+            currentsession.save(petition);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
+
+        return true;
+    }
 }

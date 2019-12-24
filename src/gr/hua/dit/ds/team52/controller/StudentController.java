@@ -17,6 +17,11 @@ public class StudentController {
     @Autowired
     private StudentDAO studentDAO;
 
+    @RequestMapping("/")
+    public String showOptions(Model model){
+        return "student/startpage-student";
+    }
+
     @RequestMapping("/list")
     public String listStudents(Model model){
 
@@ -29,6 +34,10 @@ public class StudentController {
         return "student/list-students";
     }
 
+    @RequestMapping
+    public String createPetitionJSP(Model model){
+        return "student/create-petition";
+    }
 
 
 }

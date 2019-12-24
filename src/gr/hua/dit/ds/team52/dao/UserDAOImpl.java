@@ -1,6 +1,6 @@
 package gr.hua.dit.ds.team52.dao;
 
-import gr.hua.dit.ds.team52.entity.Student;
+import gr.hua.dit.ds.team52.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,32 +20,33 @@ public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional
-    public List<Student> getStudentList() {
+    public List<User> getUserList() {
         // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         // create a query
-        Query<Student> query = currentSession.createQuery("from Student", Student.class);
+        Query<User> query = currentSession.createQuery("from User", User.class);
 
         // execute the query and get the results list
-        List<Student> students = query.getResultList();
+        List<User> users = query.getResultList();
 
         // return the results
-        return students;
+        return users;
     }
 
     @Override
-    @Transactional
-    public void addStudent(String username, String password, String firstname, String lastname, String role, int failed, String dept, String year) {
-        // get current hibernate session
-        Session currentSession = sessionFactory.getCurrentSession();
+    public Boolean addUser(User user) {
 
+        try {
+            Session currentsession=sessionFactory.getCurrentSession();
 
+            currentsession.save(user);
 
-        Query q = currentSession.createNativeQuery("INSERT INTO `user` (`username`, `password`, `enabled`) VALUES ('', '', '1');");
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
 
-
+        return true;
     }
-
 }

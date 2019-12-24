@@ -6,21 +6,23 @@ import javax.persistence.*;
 @Table(name = "internship")
 public class Internship {
     @Id
-    @Column(name = "title", nullable = false, length = 30)
+    @Column(name = "title")
     private String title;
-    @Basic
-    @Column(name = "description", nullable = false, length = 45)
-    private String description;
-    @Basic
-    @Column(name = "salary", nullable = false)
-    private int salary;
-    @Basic
-    @Column(name = "status", nullable = false, length = 8)
-    private String status;
-    @Basic
-    @Column(name = "approved", nullable = false)
-    private byte approved;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "salary")
+    private int salary;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "approved")
+    private boolean approved;
+
+    public Internship() {
+    }
 
     public String getTitle() {
         return title;
@@ -58,11 +60,11 @@ public class Internship {
     }
 
 
-    public byte getApproved() {
+    public boolean getApproved() {
         return approved;
     }
 
-    public void setApproved(byte approved) {
+    public void setApproved(boolean approved) {
         this.approved = approved;
     }
 }

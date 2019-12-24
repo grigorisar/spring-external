@@ -5,23 +5,42 @@ import javax.persistence.*;
 @Entity
 @Table(name = "petition")
 public class Petition {
-    private String studentUsername;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private String id;
+
+    @Column(name = "title", nullable = true, length = 45)
     private String title;
+
+    @Column(name = "description", nullable = true, length = -1)
     private String description;
+
+    @Column(name = "status", nullable = false, length = 8)
     private String status;
 
-    @Id
-    @Column(name = "student_username", nullable = false, length = 50)
-    public String getStudentUsername() {
-        return studentUsername;
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="student_id")
+    private Student student;
+
+    public Petition() {
+
+    }
+    public Petition(String title,String description,String status){
+        this.title = title;
+        this.description = description;
+        this.status = status;
     }
 
-    public void setStudentUsername(String studentUsername) {
-        this.studentUsername = studentUsername;
+    public String getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "title", nullable = true, length = 45)
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -30,8 +49,6 @@ public class Petition {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -40,8 +57,6 @@ public class Petition {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "status", nullable = false, length = 8)
     public String getStatus() {
         return status;
     }
@@ -50,28 +65,12 @@ public class Petition {
         this.status = status;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Petition that = (Petition) o;
-
-        if (studentUsername != null ? !studentUsername.equals(that.studentUsername) : that.studentUsername != null)
-            return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-
-        return true;
+    public Student getStudent() {
+        return student;
     }
 
-    @Override
-    public int hashCode() {
-        int result = studentUsername != null ? studentUsername.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        return result;
+    public void setStudent(Student student) {
+        this.student = student;
     }
+
 }
