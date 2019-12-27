@@ -1,6 +1,5 @@
 package gr.hua.dit.ds.team52.dao;
 
-import gr.hua.dit.ds.team52.entity.Student;
 import gr.hua.dit.ds.team52.entity.User;
 
 import java.util.List;

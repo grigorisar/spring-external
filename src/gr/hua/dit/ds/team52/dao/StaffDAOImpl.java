@@ -1,6 +1,9 @@
 package gr.hua.dit.ds.team52.dao;
 
-import gr.hua.dit.ds.team52.entity.*;
+import gr.hua.dit.ds.team52.entity.Internship;
+import gr.hua.dit.ds.team52.entity.Petition;
+import gr.hua.dit.ds.team52.entity.Service;
+import gr.hua.dit.ds.team52.entity.Staff;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

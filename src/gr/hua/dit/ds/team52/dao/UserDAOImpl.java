@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 //import org.hibernate.query.NativeQuery;
@@ -20,6 +20,7 @@ public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
 
     @Override
+    @Transactional
     public List<User> getUserList() {
         // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
@@ -35,6 +36,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Transactional
     public Boolean addUser(User user) {
 
         try {

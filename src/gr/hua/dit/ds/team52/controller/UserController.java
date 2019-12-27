@@ -18,12 +18,12 @@ public class UserController {
 
     @RequestMapping("/")
     public String showMyPage() {
-        return "home/index";
+        return "startpage";
     }
 
     @RequestMapping("/create")
     public String createUser() {
-        return "create-user";
+        return "manager/create-user";
     }
 
 
@@ -45,7 +45,7 @@ public class UserController {
 
 //        model.addAttribute("user", userDto);
 //        return new ModelAndView("redirect:/");
-        return "redirect:/";
+        return "redirect:/user/";
 
     }
 }

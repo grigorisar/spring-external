@@ -1,23 +1,23 @@
 <%--
   Created by IntelliJ IDEA.
-  User: owl
-  Date: 21/12/2019
-  Time: 18:31
+  User: USER
+  Date: 26-Dec-19
+  Time: 7:06 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%--TODO THIS--%>
+
 <html>
 <head>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<%--    load the jquery library BEFORE running the actual script--%>
-
-    <title>The Original Jupiter Experience</title>
-
-
-
+    <%--    load the jquery library BEFORE running the actual script--%>
+    <title>Create Student</title>
 </head>
+
 <body>
-<form id="user_details" name="user_creation" method="post" action="/Springmvc1_war_exploded/user/CreateFormProccess">
+<form id="user_details" name="user_creation" method="post" action="/user/create">
 
     <div class="form-group">
         <label for="username">Username</label>>

@@ -34,7 +34,7 @@ public class StudentController {
         return "student/list-students";
     }
 
-    @RequestMapping
+    @RequestMapping("/new_petition")
     public String createPetitionJSP(Model model){
         return "student/create-petition";
     }

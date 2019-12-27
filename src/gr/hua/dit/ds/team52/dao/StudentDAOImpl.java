@@ -2,7 +2,6 @@ package gr.hua.dit.ds.team52.dao;
 
 import gr.hua.dit.ds.team52.entity.Petition;
 import gr.hua.dit.ds.team52.entity.Student;
-import gr.hua.dit.ds.team52.entity.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

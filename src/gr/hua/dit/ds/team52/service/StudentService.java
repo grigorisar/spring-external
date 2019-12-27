@@ -1,11 +1,5 @@
 package gr.hua.dit.ds.team52.service;
 
-import gr.hua.dit.ds.team52.entity.Petition;
-import gr.hua.dit.ds.team52.entity.Student;
-import gr.hua.dit.ds.team52.entity.User;
-
-import java.util.List;
-
 public interface StudentService {
 
 //    public List<Student> getStudents();

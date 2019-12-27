@@ -2,15 +2,8 @@ package gr.hua.dit.ds.team52.service;
 
 import gr.hua.dit.ds.team52.dao.StudentDAO;
 import gr.hua.dit.ds.team52.dao.UserDAO;
-import gr.hua.dit.ds.team52.entity.Petition;
-import gr.hua.dit.ds.team52.entity.Student;
-import gr.hua.dit.ds.team52.entity.User;
-import gr.hua.dit.ds.team52.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {

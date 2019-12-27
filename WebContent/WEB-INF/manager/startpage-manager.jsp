@@ -8,7 +8,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,13 +15,12 @@
     <title>Insert title here</title>
 </head>
 <body>
+<link type="text/css" rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/buttons.css"/>
 <h1>Select a Service</h1>
 <%-- NAVIGATE TO PAGE--%>
-<a href="<c:url value="/manager/role"></c:url>">Role Manager</a>
-<br/>
-<a href="<c:url value="/manager/user"></c:url>">User Manager</a>
-<br/>
-<a href="<c:url value="/manager/service"></c:url>">Service Manager and update user permisions on them</a>
-<br/>
+<h2><a href="<c:url value="/manager/role"></c:url>">Role Manager</a></h2>
+<h2><a href="<c:url value="/manager/user"></c:url>">User Manager</a></h2>
+<h2><a href="<c:url value="/manager/service"></c:url>">Service Manager & Role permissions</a></h2>
 </body>
 </html>

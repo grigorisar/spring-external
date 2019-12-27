@@ -6,15 +6,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user", schema = "wM4YgjeZJi", catalog = "")
+@Table(name = "user")
 public class User {
     @Id
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username")
     private String username;
-    @Column(name = "password", nullable = false, length = 100)
+    @Column(name = "password")
     private String password;
-    @Column(name = "enabled", nullable = false)
-    private byte enabled;
+    @Column(name = "enabled")
+    private int enabled;
 
 
     public String getUsername() {
@@ -33,11 +33,11 @@ public class User {
         this.password = password;
     }
 
-    public byte getEnabled() {
+    public int getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(byte enabled) {
+    public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
 }

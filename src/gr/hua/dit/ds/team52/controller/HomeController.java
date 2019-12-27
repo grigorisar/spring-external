@@ -12,7 +12,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String showfirstpage() {
-        return "home/index";
+        return "home/startpage";
     }
 
     @RequestMapping("/example")
