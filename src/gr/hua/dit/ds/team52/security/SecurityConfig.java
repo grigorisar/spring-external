@@ -1,7 +1,9 @@
 package gr.hua.dit.ds.team52.security;
 
+import gr.hua.dit.ds.team52.dao.ServiceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +14,17 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    //SERVICES AND THEIR ROLES
+    private String[] CREATE_PETITION_ROLES={"STUDENT","ADMIN"};
+    private String[] EXAMINE_PETITION_ROLES={"ADMIN","STAFF"};
+    private String[] EXAMINE_INTERNSHIP_ROLES={"ADMIN","STAFF"};
+    private String[] MANAGE_APPLICATION_ROLES={"ADMIN"};
+
+
+
+    @Autowired
+    private ServiceDAO serviceDAO;
 
     @Autowired
     DataSource myDataSource;
@@ -38,23 +51,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/**/").permitAll()
-                .antMatchers("/user/**").permitAll()             //TODO Maybe should have role "USER"
-                .antMatchers("/admin/**").hasRole("ADMIN")               //should not start with _ROLE
-                .antMatchers("/student/**").hasRole("STUDENT")
-                .antMatchers("/staff/**").hasRole("STAFF")
+                .antMatchers("/").permitAll()
+                .antMatchers("/access_denied").permitAll()
+                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
+                .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
+                .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
+                .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
                 .anyRequest().authenticated()
                 .and()
-                //.loginProcessingUrl("/authUser") for custom login page
                 .formLogin()
                 .and()
-                .csrf().disable();;
+                .exceptionHandling().accessDeniedPage("/access_denied");
+
+        //.loginProcessingUrl("/authUser") //TODO custom controller page
     }
 
-    //public static PasswordEncoder encoder() {
+    public String[] fetchServiceRoles(String name){
+        return serviceDAO.getRoles(name);
+    }
+//public static PasswordEncoder encoder() {
     //    return new BCryptPasswordEncoder();
     //}
+
 }
-
-

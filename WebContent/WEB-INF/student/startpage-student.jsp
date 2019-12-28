@@ -13,15 +13,6 @@
 <div class="main">
     <h3><a href="<c:url value="/student/new_petition"></c:url>">New petition</a></h3>
     <h3><a href="<c:url value="/student/list"></c:url>">Student List</a></h3>
-<%--    <div class="sub-main">--%>
-<%--        <button class="button-one" onclick=redirect("new-petition")> New petition</button>--%>
-<%--    </div>--%>
-<%--    <div class="sub-main">--%>
-<%--        <button class="button-two" onclick=redirect("list")><span>Student List</span></button>--%>
-<%--    </div>--%>
-<%--    <div class="sub-main">--%>
-<%--        <button class="button-three" onclick=redirect("..")>Blank Button</button>--%>
-<%--    </div>--%>
 </div>
 
 <script type="text/javascript">
