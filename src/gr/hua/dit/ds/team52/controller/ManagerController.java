@@ -1,8 +1,10 @@
 package gr.hua.dit.ds.team52.controller;
 
 
+import gr.hua.dit.ds.team52.dao.ServiceDAO;
 import gr.hua.dit.ds.team52.dao.StaffDAO;
 import gr.hua.dit.ds.team52.dao.UserDAO;
+import gr.hua.dit.ds.team52.entity.Role;
 import gr.hua.dit.ds.team52.entity.Service;
 import gr.hua.dit.ds.team52.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class ManagerController {
 
         @Autowired
         private UserDAO userDAO;
+
+        @Autowired
+        private ServiceDAO serviceDAO;
 
         @RequestMapping("/")
         public String showMenu(Model model) {
@@ -70,7 +75,7 @@ public class ManagerController {
         @RequestMapping("/service")
         public String serviceManager(Model model) {
             // get services from dao
-            List<Service> services = staffDAO.getServices();
+            List<Service> services = serviceDAO.getServices();
 
             // add the services to the model
             model.addAttribute("services", services);

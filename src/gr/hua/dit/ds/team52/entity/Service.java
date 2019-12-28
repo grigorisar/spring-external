@@ -19,7 +19,7 @@ public class Service {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToMany(fetch=FetchType.LAZY,
+    @ManyToMany(fetch=FetchType.EAGER,
             cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(

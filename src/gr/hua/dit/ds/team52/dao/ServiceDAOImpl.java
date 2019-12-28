@@ -39,6 +39,20 @@ public class ServiceDAOImpl implements ServiceDAO{
     }
 
     @Override
+    @Transactional
+    public List<Service> getServices(){
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // create a query
+        Query<Service> query = currentSession.createQuery("from Service", Service.class);
+
+        System.out.println(query.getFirstResult());
+        // execute the query and get the results list
+        List<Service> services = query.getResultList();
+        return services;
+    }
+
+    @Override
     public void addRoleToService(Service service, Role role) {
         Session currentSession = sessionFactory.getCurrentSession();
 

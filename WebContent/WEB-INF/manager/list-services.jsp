@@ -34,12 +34,18 @@
             <tr>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Roles</th>
             </tr>
             </thead>
             <c:forEach var="tempService" items="${services}">
                     <tr>
                         <td>${tempService.title}</td>
                         <td>${tempService.description}</td>
+                        <td>
+                            <c:forEach var="tempRole" items="${tempService.roles}">
+                                ${tempRole.title} ,
+                            </c:forEach>
+                        </td>
                     </tr>
             </c:forEach>
         </table>

@@ -46,20 +46,6 @@ public class StaffDAOImpl implements StaffDAO {
     }
 
     @Override
-    @Transactional
-    public List<Service> getServices(){
-        Session currentSession = sessionFactory.getCurrentSession();
-
-        // create a query
-        Query<Service> query = currentSession.createQuery("from Service", Service.class);
-
-        System.out.println(query.getFirstResult());
-        // execute the query and get the results list
-        List<Service> services = query.getResultList();
-        return services;
-    }
-
-    @Override
     public Service searchService(String title) {
         Session currentSession = sessionFactory.getCurrentSession();
         // create a query
