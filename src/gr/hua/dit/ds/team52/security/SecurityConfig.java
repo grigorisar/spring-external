@@ -3,7 +3,6 @@ package gr.hua.dit.ds.team52.security;
 import gr.hua.dit.ds.team52.dao.ServiceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,23 +52,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/access_denied").permitAll()
-                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
-                .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
-                .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
-                .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
+//                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
+//                .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
+//                .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
+//                .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .and()
-                .exceptionHandling().accessDeniedPage("/access_denied");
+                .csrf().disable();
+
+//                .and()
+//                .formLogin()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/access_denied");
 
         //.loginProcessingUrl("/authUser") //TODO custom controller page
     }
 
     public String[] fetchServiceRoles(String name){
-        return serviceDAO.getRoles(name);
+        return serviceDAO.getRolesByService(name);
     }
 //public static PasswordEncoder encoder() {
     //    return new BCryptPasswordEncoder();

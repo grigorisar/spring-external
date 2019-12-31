@@ -9,14 +9,15 @@ import java.util.List;
 public class Service {
 
     @Id
-    @Column(name ="id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id")
     private int id;
     @Basic
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     private String title;
 
     @Basic
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
     @ManyToMany(fetch=FetchType.EAGER,

@@ -20,52 +20,75 @@ public class ServiceDAOImpl implements ServiceDAO{
     private SessionFactory sessionFactory;
 
 
+
     @Override
     @Transactional
-    public String[] getRoles(String serviceName) {
+    public List<Role> getRoles() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        List<Role> roles = currentSession.createQuery("from Role",Role.class).getResultList();
+        return roles;
+    }
+
+    @Override
+    @Transactional
+    public Role getRoleByName(String roleName) {
         Session currentSession = sessionFactory.getCurrentSession();
         //id 1=manager 2=petitions 3=internships 6=create petition
         // create a query
-        Service service = currentSession.createQuery("from Service S WHERE S.title LIKE '"+serviceName+"'", Service.class).getSingleResult();
+        return currentSession.createQuery("from Role R WHERE R.title LIKE '"+roleName+"'", Role.class).getSingleResult();
+    }
 
-        List<Role> rolesOBJ =service.getRoles();
+    @Override
+    @Transactional
+    public Service getServiceByName(String name) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        //id 1=manager 2=petitions 3=internships 6=create petition
+        // create a query
+        return currentSession.createQuery("from Service S WHERE S.title LIKE '"+name+"'", Service.class).getSingleResult();
+    }
 
-        String[] roles = new String[rolesOBJ.size()];
-        int i=0;
-        for (Role tempRole:rolesOBJ) {
-            roles[i++] = tempRole.getTitle();
-        }
-        return roles;
+    @Override
+    @Transactional
+    public void saveService(Service service) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.saveOrUpdate(service);
+    }
+
+    @Override
+    @Transactional
+    public void saveRole(Role role) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.save(role);
     }
 
     @Override
     @Transactional
     public List<Service> getServices(){
         Session currentSession = sessionFactory.getCurrentSession();
-
-        // create a query
-        Query<Service> query = currentSession.createQuery("from Service", Service.class);
-
-        System.out.println(query.getFirstResult());
         // execute the query and get the results list
-        List<Service> services = query.getResultList();
+        List<Service> services = currentSession.createQuery("from Service", Service.class).getResultList();
+
         return services;
     }
 
     @Override
+    @Transactional
     public void addRoleToService(Service service, Role role) {
+
         Session currentSession = sessionFactory.getCurrentSession();
 
         service.add(role);
-        currentSession.save(service);
 
+        currentSession.saveOrUpdate(service);
     }
 
     @Override
+    @Transactional
     public void deleteRoleFromService(Service service,Role role) {
+        //update only
         Session currentSession = sessionFactory.getCurrentSession();
 
         service.getRoles().remove(role);
-        currentSession.save(service);
+        currentSession.update(service);
     }
 }

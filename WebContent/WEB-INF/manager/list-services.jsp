@@ -32,6 +32,7 @@
         <table id="list" class="steelBlueCols" style="width:100%">
             <thead>
             <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Roles</th>
@@ -39,6 +40,7 @@
             </thead>
             <c:forEach var="tempService" items="${services}">
                     <tr>
+                        <td>${tempService.id}</td>
                         <td>${tempService.title}</td>
                         <td>${tempService.description}</td>
                         <td>
@@ -49,28 +51,36 @@
                     </tr>
             </c:forEach>
         </table>
+        <input id="serviceID" hidden value="">
     </div>
 </div>
 
 <div class="main">
     <div class="sub-main">
-        <button class="button-one">New Service</button>
+        <button class="button-one" onclick=redirect("/create")>New Service</button>
     </div>
     <div class="sub-main">
-        <button class="button-two"><span>Update Service</span></button>
+        <button class="button-two" onclick=redirect("/update")><span>Update Service</span></button>
     </div>
     <div class="sub-main">
-        <button class="button-three">Delete Service</button>
+        <button class="button-three" onclick=redirect("/delete")>Delete Service</button>
     </div>
 </div>
 
 <script type="text/javascript">
+    function redirect(link){
+         window.location.href = link;
+    }
+</script>
+
+<script type="text/javascript">
+    var serviceID = document.getElementById("serviceID");
     function highlight(e) {
         if (selected[0]) selected[0].className = '';
         e.target.parentNode.className = 'selected';
-        var v = $('.selected td').eq(1).text();
+         serviceID.setAttribute('value', $('.selected td').eq(0).text());
         //get selected table row'w second column (starts from zero)
-        console.log(v);
+        console.log(serviceID.getAttribute("value"));
     }
     var table = document.getElementById('list'),
         selected = table.getElementsByClassName('selected');
