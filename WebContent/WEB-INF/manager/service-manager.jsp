@@ -78,15 +78,14 @@
 
 <br>
 
-
+<%--BUTTONS--%>
 <div class="pure-g">
-
+    <%--create service--%>
     <div align="center"    class="pure-u-1-3">
 
         <input type="button" name="addService" id="addService" value="Add Service">
         <br>
-
-        <form style="display:none" id="service_creation"  name="service_creation" method="post" action="/distributed_version_war_exploded/manager/create_service_process">
+        <form style="display:none" id="service_creation"  name="service_creation" method="post" action="/distributed_version_war_exploded/manager/create_service">
 
                 <div class="form-group">
                     <label for="title">Title</label> <br>
@@ -96,7 +95,6 @@
                     <label for="description">Description</label><br>
                     <input required type="description" name="description" id="description" placeholder="Description" maxlength="100"><br>
                 </div>
-
                 <div class="form-group">
                     <label for="roles">Roles : </label>
                     <div id="roles">
@@ -117,17 +115,13 @@
         <div id="bottom1"></div>
     </div>
 
-
-
+        <%--update service--%>
     <div align="center" class="pure-u-1-3">
 
         <input type="button" name="updateService" id="updateService" value="Update Selected Service">
-
         <br>
-
         <div style="display:none" id="update">
-
-            <form  id="user_update"  name="service_creation" method="post" action="/Springmvc1_war_exploded/user/update_Service_process">
+            <form  id="service_update"  name="service_creation" method="post" action="/distributed_version_war_exploded/manager/update_service">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="title">Title</label> <br>
@@ -143,14 +137,13 @@
                     <label for="roles_u">Roles</label><br>
                     <div id="roles_u">
                         <c:forEach var="tempRole" items="${roles}">
-                            <input required type="radio" name="role[]" id=${tempRole.title}  maxlength="50"><br>
+                            <input type="checkbox" name="role[]" value="${tempRole.title}">${tempRole.title}<br>
                         </c:forEach>
                     </div>
                 </div>
 
                 <div  class="form-group" >
-                    <input hidden type="text" required name="old_title" id="old_title"  ><br>
-
+                    <input hidden type="text" required name="old_title" id="old_title"><br>
                 </div>
 
                 <div class="form-group">
@@ -167,6 +160,8 @@
         </div>
         <div id="bottom2"></div>
     </div>
+
+        <%--delete service--%>
     <div align="center" class="pure-u-1-3" >
 
         <input type="button" name="deleteService" id="deleteService" value="Delete Selected Service">
@@ -175,11 +170,11 @@
 
         <div style="display:none" id="delete">
 
-            <form  id="user_delete"  name="user_delete" method="post" action="/Springmvc1_war_exploded/user/delete_Service_process">
+            <form  id="service_delete"  name="service_delete" method="post" action="/distributed_version_war_exploded/manager/delete_service">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="title">Title</label> <br>
-                    <input required type="text" name="title_d" id="title_d" placeholder="Title" maxlength="50"><br>
+                    <input required type="text" name="title" id="title_d" placeholder="Title" maxlength="50"><br>
                 </div>
 
                 <input type="submit" name="confirm" id="confirm" value="Confirm">
@@ -194,6 +189,7 @@
 
 
     </div>
+
     <div id="bottom3"></div>
 </div>
 
@@ -249,7 +245,7 @@
             if (  $("#update").css('display') == 'none' ) {
                 $("#update").show();
 
-                var title = $('.selected td').eq(3).text();
+                var title = $('.selected td').eq(1).text();
 
                 if (title == ""){
 
@@ -257,14 +253,9 @@
 
                 } else {
 
-                    $("#old_title").val($('.selected td').eq(3).text());
-                    $("#title_u").val($('.selected td').eq(3).text());
-                    $("#lastname_u").val($('.selected td').eq(2).text());
-                    $("#firstname_u").val($('.selected td').eq(1).text());
-                    $("#dept_u").val($('.selected td').eq(4).text());
-                    $("#year_u").val($('.selected td').eq(5).text());
-                    $("#failed_u").val($('.selected td').eq(6).text());
-
+                    $("#old_title").val($('.selected td').eq(1).text());
+                    $("#title_u").val($('.selected td').eq(1).text());
+                    $("#description_u").val($('.selected td').eq(2).text());
                 }
 
             } else {
@@ -279,7 +270,7 @@
             if (  $("#delete").css('display') == 'none' ) {
                 $("#delete").show();
 
-                var title = $('.selected td').eq(3).text();
+                var title = $('.selected td').eq(1).text();
 
                 if (title == ""){
 
@@ -287,7 +278,7 @@
 
                 } else {
 
-                    $("#title_d").val($('.selected td').eq(3).text());
+                    $("#title_d").val($('.selected td').eq(1).text());
 
                 }
 
@@ -311,28 +302,18 @@
             /* get some values from elements on the page: */
             var $form = $(this),
                 url = $form.attr('action');
-
             console.log("posting happens");
-            // var roles= [];
-            // for(var i=0; checkboxes[i]; ++i) {
-            //     if (checkboxes[i].checked) {
-            //         roles.push(checkboxes[i].value);
-            //     }
-            // }
-            var form_data = $('#service_creation').serialize();
-            // form_data.roles= [];
-            // form_data.roles.push(roles);
-
 
             $.ajax({
                 type: "POST",
                 url: url,
-                data : form_data,
+                data : $('#service_creation').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {                                   //on success of ajax
                     //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
                     console.log("posting sucessful");
                     $("#bottom1").empty().append(data);
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {                                 //on error
                     //  = eval("(" + xhr.responseText + ")");       //eval is evil dont use it
@@ -340,6 +321,7 @@
                     let err = xhr.responseText;
                     alert(err);
                     $('#bottom1').empty().append("Error Encountered with request " + error)
+                    window.location.reload();
 
                 },
                 complete: function () {                             //on completion
@@ -350,7 +332,7 @@
 
         });
 
-        $("#user_update").submit(function(event) {    //posting for user update
+        $("#service_update").submit(function(event) {    //posting for user update
             event.preventDefault();
 
             /* get some values from elements on the page: */
@@ -360,16 +342,18 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data : $('#user_update').serialize(),
+                data : $('#service_update').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {
                     console.log("posting sucessful");
                     $("#bottom2").empty().append(data)
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {
                     var err = xhr.responseText;
                     alert(err);
                     $('#bottom2').empty().append("Error Encountered with request " + error)
+                    window.location.reload();
 
                 },
                 complete: function () {                             //on completion
@@ -379,7 +363,7 @@
 
         });
 
-        $("#user_delete").submit(function(event) {
+        $("#service_delete").submit(function(event) {
 
             /* stop form from submitting normally */
             event.preventDefault();
@@ -394,28 +378,23 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data : $('#user_delete').serialize(),
-                // dataType: "plain/text",
+                data : $('#service_delete').serialize(),
                 success: function(data) {
                     console.log("posting sucessful");
                     $("#bottom3").empty().append(data)
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {
                     var err = xhr.responseText;
                     alert(err);
                     $('#bottom3').empty().append("Error Encountered with request " + error)
-
+                    window.location.reload();
                 },
                 complete: function () {                             //on completion
                     console.log("deletion finished")
                 }
             });
-
-
         });
-
-
-
     });
 </script>
 

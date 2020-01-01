@@ -73,11 +73,39 @@ public class ManagerController {
         @RequestMapping("/role")
         public String roleManager(Model model) {
             // get roles from dao
-//            List<Customer> customers = customerDAO.getCustomers();
-
+            List<Role> roles = serviceDAO.getRoles();
             // add the roles to the model
-            model.addAttribute("roles", null);
-            return "redirect:/manager/";
+            model.addAttribute("roles", roles);
+            return "manager/role-manager";
+        }
+        @ResponseBody
+        @RequestMapping (value ="/create_role" , method = RequestMethod.POST)
+        public String createRole(WebRequest request ) {
+            Role role = new Role();
+            //set title id will auto generate
+            role.setTitle(request.getParameter("title"));
+
+            serviceDAO.saveRole(role);
+            return "Role Added.";
+        }
+
+        @ResponseBody
+        @RequestMapping (value ="/update_role" , method = RequestMethod.POST)
+        public String updateRole(WebRequest request ) {
+            //search
+            Role role = serviceDAO.getRoleByName(request.getParameter("old_title"));
+            role.setTitle(request.getParameter("title"));
+            serviceDAO.saveRole(role);
+            return "Role Updated.";
+        }
+
+        @ResponseBody
+        @RequestMapping (value ="/delete_role" , method = RequestMethod.POST)
+        public String deleteRole(WebRequest request ) {
+            //search
+            Role role = serviceDAO.getRoleByName(request.getParameter("title"));
+            serviceDAO.deleteRole(role);
+            return "Role Deleted.";
         }
 
         @RequestMapping("/student")
@@ -85,47 +113,6 @@ public class ManagerController {
             List<Student> students = studentDAO.getStudents();
             model.addAttribute("students", students);
             return "manager/student-manager";
-        }
-
-        @ResponseBody
-        @RequestMapping (value ="/create_service_process" , method = RequestMethod.POST)
-        public String createService(WebRequest request ) {
-
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
-            String[] roles = request.getParameterValues("role[]");
-
-
-            Service service= new Service();
-            service.setDescription(description);
-            service.setTitle(title);
-
-            for (String temp:roles) {
-                service.add(serviceDAO.getRoleByName(temp));
-            }
-            serviceDAO.saveService(service);
-            return "Success!";
-        }
-
-        @ResponseBody
-        @RequestMapping (value ="/update_service" , method = RequestMethod.POST)
-        public String updateService (WebRequest request ) {
-
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
-            String[] roles = request.getParameterValues("role[]");
-
-
-
-            Service service= new Service();
-            service.setDescription(description);
-            service.setTitle(title);
-
-            for (String temp:roles) {
-                service.add(serviceDAO.getRoleByName(temp));
-            }
-            serviceDAO.saveService(service);
-            return "Success!";
         }
 
         @RequestMapping("/service")
@@ -141,18 +128,56 @@ public class ManagerController {
             return "manager/service-manager";
         }
 
-        @RequestMapping("/service/create")
-        public String createService(Model model){
-            model.getAttribute("serviceID");
-            return "manager/create-service";
+        @ResponseBody
+        @RequestMapping (value ="/create_service" , method = RequestMethod.POST)
+        public String createService(WebRequest request ) {
+
+            String title = request.getParameter("title");
+            String description = request.getParameter("description");
+            String[] roles = request.getParameterValues("role[]");
+
+
+            Service service= new Service();
+            service.setDescription(description);
+            service.setTitle(title);
+
+            for (String temp:roles) {
+                service.add(serviceDAO.getRoleByName(temp));
+            }
+            serviceDAO.saveService(service);
+            return "Service Added.";
         }
-        @RequestMapping("/service/index")
-        public String serviceManagerIndex(WebRequest request,Model model) {
-            // get services from dao
-            String title = request.getParameter("selectedService");
-            Service service = staffDAO.searchService(title);
-            model.addAttribute("service", service);
-            return "manager/service-details";
+
+        @ResponseBody
+        @RequestMapping (value ="/update_service" , method = RequestMethod.POST)
+        public String updateService (WebRequest request ) {
+
+            String old_title = request.getParameter("old_title");
+            String title = request.getParameter("title");
+            String description = request.getParameter("description");
+            String[] roles = request.getParameterValues("role[]");
+
+            Service service = serviceDAO.getServiceByName(old_title);
+
+            //clear list
+            service.setRoles(null);
+            service.setDescription(description);
+            service.setTitle(title);
+
+            //fill list with new roles
+            for (String temp:roles) {
+                service.add(serviceDAO.getRoleByName(temp));
+            }
+            serviceDAO.saveService(service);
+            return "Service Updated.";
+        }
+
+        @ResponseBody
+        @RequestMapping (value ="/delete_service" , method = RequestMethod.POST)
+        public String deleteService (WebRequest request ) {
+            Service service = serviceDAO.getServiceByName(request.getParameter("title"));
+            serviceDAO.deleteService(service);
+            return "Service Deleted.";
         }
 
 

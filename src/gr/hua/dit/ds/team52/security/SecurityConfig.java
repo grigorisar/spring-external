@@ -1,6 +1,8 @@
 package gr.hua.dit.ds.team52.security;
 
 import gr.hua.dit.ds.team52.dao.ServiceDAO;
+import gr.hua.dit.ds.team52.entity.Role;
+import gr.hua.dit.ds.team52.entity.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -71,7 +73,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public String[] fetchServiceRoles(String name){
-        return serviceDAO.getRolesByService(name);
+        int i=0;
+        Service service = serviceDAO.getServiceByName(name);
+        String[] roles = new String[service.getRoles().size()];
+        for (Role tempRole:service.getRoles()) {
+            roles[i++] = tempRole.getTitle();
+        }
+        return roles;
     }
 //public static PasswordEncoder encoder() {
     //    return new BCryptPasswordEncoder();

@@ -58,8 +58,24 @@ public class ServiceDAOImpl implements ServiceDAO{
     @Transactional
     public void saveRole(Role role) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.save(role);
+        currentSession.saveOrUpdate(role);
     }
+
+    @Override
+    @Transactional
+    public void deleteService(Service service) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(service);
+    }
+
+    @Override
+    @Transactional
+    public void deleteRole(Role role) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(role);
+    }
+
+
 
     @Override
     @Transactional

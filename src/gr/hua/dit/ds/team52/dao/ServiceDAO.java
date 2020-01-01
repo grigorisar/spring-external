@@ -19,6 +19,9 @@ public interface ServiceDAO {
     public void saveService(Service service);
     public void saveRole(Role role);
 
+    public void deleteService(Service service);
+    public void deleteRole(Role role);
+
     public void addRoleToService(Service service,Role role);
     public void deleteRoleFromService(Service service,Role role);
 
