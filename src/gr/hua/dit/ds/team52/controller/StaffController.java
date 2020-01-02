@@ -7,7 +7,10 @@ import gr.hua.dit.ds.team52.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -41,5 +44,7 @@ public class StaffController {
 
         return "staff/list-internships";
     }
+
+
 
 }

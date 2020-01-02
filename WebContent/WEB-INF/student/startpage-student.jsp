@@ -12,7 +12,7 @@
 <h2>Student Options</h2>
 <div class="main">
     <h3><a href="<c:url value="/student/new_petition"></c:url>">New petition</a></h3>
-    <h3><a href="<c:url value="/student/list"></c:url>">Student List</a></h3>
+<%--    <h3><a href="<c:url value="/student/list"></c:url>">Student List</a></h3>--%>
 </div>
 
 <script type="text/javascript">

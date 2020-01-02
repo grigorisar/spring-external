@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface StudentDAO {
 
-    public List<Student> getStudents();
-    public Boolean saveStudent(Student student);
     public List<Petition> getPetitions();
     public Boolean savePetition(Petition petition,String studentUsername);
 

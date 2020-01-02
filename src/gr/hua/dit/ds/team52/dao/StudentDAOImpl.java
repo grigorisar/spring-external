@@ -19,49 +19,6 @@ public class StudentDAOImpl implements StudentDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
-    @Override
-    @Transactional
-    public List<Student> getStudents(){
-        Session currentSession = sessionFactory.getCurrentSession();
-
-        // create a query
-        Query<Student> query = currentSession.createQuery("from Student", Student.class);
-
-        // execute the query and get the results list
-        List<Student> students = query.getResultList();
-        return students;
-    }
-
-    @Override
-    @Transactional
-    public Boolean saveStudent(Student student) {
-        /**
-         * This function is both an UPDATE and INSERT tool.
-         * TODO CHECK BACK FOR BUGS
-         */
-
-        Session currentsession=sessionFactory.getCurrentSession();
-
-
-        //if user doesnt exist
-        if ( currentsession.createQuery("from User u WHERE u.username = '"+student.getUsername()+"'", User.class).getSingleResult().equals(null)){
-            return false;
-        }
-
-        try {
-            if (student.getId()!=0) {
-                currentsession.update(student);
-            }else {
-                currentsession.save(student);
-            }
-            return true;
-        }catch (Exception e ){
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     @Override
     @Transactional
     public List<Petition> getPetitions(){

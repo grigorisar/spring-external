@@ -16,6 +16,14 @@ public class User {
     @Column(name = "enabled")
     private int enabled;
 
+    public User(String username,String password,int enabled) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+    }
+
+    public User() {
+    }
 
     public String getUsername() {
         return username;

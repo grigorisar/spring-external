@@ -5,31 +5,32 @@ import javax.persistence.*;
 @Entity
 @Table(name = "staff")
 public class Staff {
-    @Basic
-    @Column(name = "password", nullable = false, length = 100)
-    private String password;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
     @Column(name = "username", nullable = false, length = 50)
     private String username;
-    @Basic
     @Column(name = "first_name", nullable = true, length = 45)
     private String firstName;
-    @Basic
     @Column(name = "last_name", nullable = true, length = 45)
     private String lastName;
-    @Basic
     @Column(name = "position", nullable = true, length = 30)
     private String position;
 
-
-    public String getPassword() {
-        return password;
+    public Staff( String firstName , String lastName,String username) {
+        this.username= username;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Staff() {
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;

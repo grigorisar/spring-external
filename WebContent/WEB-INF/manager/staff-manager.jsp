@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Service Manager</title>
+    <title>Staff Manager</title>
 
 
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous" >
@@ -22,7 +22,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- <%--  scripts sources for jquery data tables --%> -->
-    <script type="text/javascript" src=" https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.jqueryui.min.js"></script>
 
@@ -52,25 +51,24 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Roles</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Position Title</th>
     </tr>
     </thead>
     <tbody id="table_body">
 
-    <c:forEach var="tempService" items="${services}">
+    <c:forEach var="tempStaff" items="${staff}">
 
         <tr>
-            <td>${tempService.id}</td>
-            <td>${tempService.title}</td>
-            <td>${tempService.description}</td>
-            <td>
-                <c:forEach var="tempRole" items="${tempService.roles}">
-                    ${tempRole.title} ,
-                </c:forEach>
-            </td>
+            <td>${tempStaff.id}</td>
+            <td>${tempStaff.firstName}</td>
+            <td>${tempStaff.lastName}</td>
+            <td>${tempStaff.username}</td>
+            <td>${tempStaff.position}</td>
         </tr>
+
     </c:forEach>
 
     </tbody>
@@ -78,77 +76,104 @@
 
 <br>
 
-<%--BUTTONS--%>
+
 <div class="pure-g">
-    <%--create service--%>
+
     <div align="center"    class="pure-u-1-3">
 
-        <input type="button" name="addService" id="addService" value="Add Service">
+        <input type="button" name="addStaff" id="addStaff" value="Add Staff">
         <br>
-        <form style="display:none" id="service_creation"  name="service_creation" method="post" action="${pageContext.request.contextPath}/manager/create_service">
 
-                <div class="form-group">
-                    <label for="title">Title</label> <br>
-                    <input required type="text" name="title" id="title" placeholder="Title" maxlength="50"><br>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label><br>
-                    <input required type="description" name="description" id="description" placeholder="Description" maxlength="100"><br>
-                </div>
-                <div class="form-group">
-                    <label for="roles">Roles : </label>
-                    <div id="roles">
-                        <c:forEach var="tempRole" items="${roles}">
-                            <input class="checkbox" type="checkbox" name="role[]" value="${tempRole.title}">${tempRole.title}<br>
-                        </c:forEach>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input required type="submit" class="button" value = "Submit" id="create">
-                </div>
+        <form style="display:none" id="staff_creation"  name="staff_creation" method="post" action="${pageContext.request.contextPath}/manager/create_user_process">
 
-                <!-- for the jquery ajax post request -->
-                <input type="hidden"
-                       name="${_csrf.parameterName}"
-                       value="${_csrf.token}"/>
-            </form>
-        <div id="bottom1"></div>
+            <div class="form-group">
+                <label for="username">Username</label> <br>
+                <input required type="text" name="username" id="username" placeholder="Username" maxlength="50"><br>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label><br>
+                <input required type="password" name="password" id="password" placeholder="Password" maxlength="100"><br>
+
+            </div>
+
+            <div class="form-group">
+                <label for="firstname">First Name</label><br>
+                <input required type="text" name="firstname" id="firstname" placeholder="First Name" maxlength="45"><br>
+
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Last Name</label><br>
+                <input required type="text" name="lastname" id="lastname" placeholder="Last Name" maxlength="45"><br>
+
+            </div>
+
+            <div  class="form-group" id="PositionDiv">
+                <label for="position">Department</label><br>
+                <input required type="text" name="position" id="position" placeholder="Position Title" maxlength="45"><br>
+
+            </div>
+
+            <div class="form-group">
+                <input required type="submit" class="button" value = "Submit" id="create">
+            </div>
+
+            <div  class="form-group" >
+                <input hidden type="text" required name="role" id="role" value="Staff" ><br>
+            </div>
+            <!-- for the jquery ajax post request -->
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+
+        </form>
+
     </div>
-
-        <%--update service--%>
     <div align="center" class="pure-u-1-3">
 
-        <input type="button" name="updateService" id="updateService" value="Update Selected Service">
+        <input type="button" name="updateStaff" id="updateStaff" value="Update Selected Staff">
+
         <br>
+
         <div style="display:none" id="update">
-            <form  id="service_update"  name="service_creation" method="post" action="${pageContext.request.contextPath}/manager/update_service">
+
+            <form  id="staff_update"  name="staff_update" method="post" action="${pageContext.request.contextPath}/manager/update_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
-                    <label for="title">Title</label> <br>
-                    <input required type="text" name="title" id="title_u" placeholder="Title" maxlength="50"><br>
+                    <label for="username">Username</label> <br>
+                    <input required type="text" name="username" id="username_u" placeholder="Username" maxlength="50"><br>
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Description</label><br>
-                    <input required type="text" name="description" id="description_u" placeholder="Description" maxlength="45"><br>
+                    <label for="firstname">First Name</label><br>
+                    <input required type="text" name="firstname" id="firstname_u" placeholder="First Name" maxlength="45"><br>
+
                 </div>
 
                 <div class="form-group">
-                    <label for="roles_u">Roles</label><br>
-                    <div id="roles_u">
-                        <c:forEach var="tempRole" items="${roles}">
-                            <input type="checkbox" name="role[]" value="${tempRole.title}">${tempRole.title}<br>
-                        </c:forEach>
-                    </div>
+                    <label for="lastname">Last Name</label><br>
+                    <input required type="text" name="lastname" id="lastname_u" placeholder="Last Name" maxlength="45"><br>
+
+                </div>
+
+
+                <div  class="form-group" >
+                    <label for="position">Department</label><br>
+                    <input required type="text" name="position" id="position_u" placeholder="Position Title" maxlength="45"><br>
+
                 </div>
 
                 <div  class="form-group" >
-                    <input hidden type="text" required name="old_title" id="old_title"><br>
+                    <input hidden type="text" required name="old_username" id="old_username"  ><br>
+                </div>
+
+                <div  class="form-group" >
+                    <input hidden type="text" required name="role" id="role_u" value="Staff" ><br>
                 </div>
 
                 <div class="form-group">
                     <input required type="submit" class="button" value = "Update" id="updateB">
-
                 </div>
 
                 <input type="hidden"
@@ -158,23 +183,20 @@
             </form>
 
         </div>
-        <div id="bottom2"></div>
     </div>
-
-        <%--delete service--%>
     <div align="center" class="pure-u-1-3" >
 
-        <input type="button" name="deleteService" id="deleteService" value="Delete Selected Service">
+        <input type="button" name="deleteStaff" id="deleteStaff" value="Delete Selected Staff">
 
         <br>
 
         <div style="display:none" id="delete">
 
-            <form  id="service_delete"  name="service_delete" method="post" action="${pageContext.request.contextPath}/manager/delete_service">
+            <form  id="staff_delete"  name="staff_delete" method="post" action="${pageContext.request.contextPath}/manager/delete_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
-                    <label for="title">Title</label> <br>
-                    <input required type="text" name="title" id="title_d" placeholder="Title" maxlength="50"><br>
+                    <label for="username">Username</label> <br>
+                    <input required type="text" name="username" id="username_d" placeholder="Username" maxlength="50"><br>
                 </div>
 
                 <input type="submit" name="confirm" id="confirm" value="Confirm">
@@ -189,9 +211,9 @@
 
 
     </div>
-
-    <div id="bottom3"></div>
 </div>
+<br>
+<div id="bottom" align="center"></div>
 
 <script type="text/javascript">
 
@@ -222,40 +244,44 @@
         var table = $('#table').DataTable();    //make "table" into a datatable using the library
 
 
-        $("#addService").click (function(e) {
+        $("#addStaff").click (function(e) {
 
             // console.log("you clicked me")
-            // $("#service_creation").toggle();
-            $('#service_creation').trigger("reset");    //reset form
-            $('#bottom1').empty();
+            // $("#staff_creation").toggle();
+            $('#staff_creation').trigger("reset");    //reset form
+            // $('#bottom1').empty();
 
-            if (  $("#service_creation").css('display') === 'none' ) {
-                $("#service_creation").show();
+            if (  $("#staff_creation").css('display') === 'none' ) {
+                $("#staff_creation").show();
             } else {
-                $("#service_creation").hide();
+                $("#staff_creation").hide();
+
             }
 
 
         });
 
-        $("#updateService").click (function(e) {
+        $("#updateStaff").click (function(e) {
 
-            $('#user_update').trigger("reset");
-            $('#bottom2').empty();
+            $('#staff_update').trigger("reset");
+            // $('#bottom2').empty();
             if (  $("#update").css('display') == 'none' ) {
                 $("#update").show();
 
-                var title = $('.selected td').eq(1).text();
+                var username = $('.selected td').eq(3).text();
 
-                if (title == ""){
+                if (username == ""){
 
                     // $("#table_body").empty();
 
                 } else {
 
-                    $("#old_title").val($('.selected td').eq(1).text());
-                    $("#title_u").val($('.selected td').eq(1).text());
-                    $("#description_u").val($('.selected td').eq(2).text());
+                    $("#old_username").val($('.selected td').eq(3).text());     //0 is ID
+                    $("#username_u").val($('.selected td').eq(3).text());
+                    $("#lastname_u").val($('.selected td').eq(2).text());
+                    $("#firstname_u").val($('.selected td').eq(1).text());
+                    $("#position_u").val($('.selected td').eq(4).text());
+
                 }
 
             } else {
@@ -265,27 +291,27 @@
             }
         });
 
-        $("#deleteService").click (function(e) {               //on click function for delete Service service
+        $("#deleteStaff").click (function(e) {               //on click function for delete staff service
 
             if (  $("#delete").css('display') == 'none' ) {
                 $("#delete").show();
 
-                var title = $('.selected td').eq(1).text();
+                var username = $('.selected td').eq(3).text();
 
-                if (title == ""){
+                if (username == ""){
 
                     // $("#table_body").empty();
 
                 } else {
 
-                    $("#title_d").val($('.selected td').eq(1).text());
+                    $("#username_d").val($('.selected td').eq(3).text());
 
                 }
 
             } else {
                 $("#delete").hide();
                 $('#delete').trigger("reset");    //reset form
-                $('#bottom3').empty();
+                // $('#bottom3').empty();
 
             }
 
@@ -293,8 +319,8 @@
         });
 
 
-        /* attach a submit handler to the form */       //for form service_creation
-        $("#service_creation").submit(function(event) {
+        /* attach a submit handler to the form */       //for form staff_creation
+        $("#staff_creation").submit(function(event) {
 
             /* stop form from submitting normally */
             event.preventDefault();
@@ -302,37 +328,35 @@
             /* get some values from elements on the page: */
             var $form = $(this),
                 url = $form.attr('action');
+
             console.log("posting happens");
 
             $.ajax({
                 type: "POST",
                 url: url,
-                data : $('#service_creation').serialize(),
+                data : $('#staff_creation').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {                                   //on success of ajax
                     //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
                     console.log("posting sucessful");
-                    $("#bottom1").empty().append(data);
-                    window.location.reload();
+                    $("#bottom").empty().append(data)
                 },
                 error: function(xhr, request, error) {                                 //on error
                     //  = eval("(" + xhr.responseText + ")");       //eval is evil dont use it
                     // alert(err.Message);
-                    let err = xhr.responseText;
-                    alert(err);
-                    $('#bottom1').empty().append("Error Encountered with request " + error)
-                    window.location.reload();
+                    let err = xhr.responseText
+                    alert(err)
+                    $('#bottom').empty().append("Error Encountered with request " + error)
 
                 },
                 complete: function () {                             //on completion
-
-                    console.log("creation finished");
+                    console.log("creation finished")
                 }
             });
 
         });
 
-        $("#service_update").submit(function(event) {    //posting for user update
+        $("#staff_update").submit(function(event) {    //posting for user update
             event.preventDefault();
 
             /* get some values from elements on the page: */
@@ -342,18 +366,16 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data : $('#service_update').serialize(),
+                data : $('#staff_update').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {
-                    console.log("posting sucessful");
-                    $("#bottom2").empty().append(data)
-                    window.location.reload();
+                    console.log("posting sucessful")
+                    $("#bottom").empty().append(data)
                 },
                 error: function(xhr, request, error) {
-                    var err = xhr.responseText;
-                    alert(err);
-                    $('#bottom2').empty().append("Error Encountered with request " + error)
-                    window.location.reload();
+                    var err = xhr.responseText
+                    alert(err)
+                    $('#bottom').empty().append("Error Encountered with request " + error)
 
                 },
                 complete: function () {                             //on completion
@@ -363,7 +385,7 @@
 
         });
 
-        $("#service_delete").submit(function(event) {
+        $("#staff_delete").submit(function(event) {
 
             /* stop form from submitting normally */
             event.preventDefault();
@@ -378,23 +400,28 @@
             $.ajax({
                 type: "POST",
                 url: url,
-                data : $('#service_delete').serialize(),
+                data : $('#staff_delete').serialize(),
+                // dataType: "plain/text",
                 success: function(data) {
-                    console.log("posting sucessful");
-                    $("#bottom3").empty().append(data)
-                    window.location.reload();
+                    console.log("posting sucessful")
+                    $("#bottom").empty().append(data)
                 },
                 error: function(xhr, request, error) {
-                    var err = xhr.responseText;
-                    alert(err);
-                    $('#bottom3').empty().append("Error Encountered with request " + error)
-                    window.location.reload();
+                    var err = xhr.responseText
+                    alert(err)
+                    $('#bottom').empty().append("Error Encountered with request " + error)
+
                 },
                 complete: function () {                             //on completion
                     console.log("deletion finished")
                 }
             });
+
+
         });
+
+
+
     });
 </script>
 

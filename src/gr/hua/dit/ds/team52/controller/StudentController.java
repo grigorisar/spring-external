@@ -22,18 +22,6 @@ public class StudentController {
         return "student/startpage-student";
     }
 
-    @RequestMapping("/list")
-    public String listStudents(Model model){
-
-        // get customers from dao
-        List<Student> students = studentDAO.getStudents();
-
-        // add the customers to the model
-        model.addAttribute("students", students);
-
-        return "student/list-students";
-    }
-
     @RequestMapping("/new_petition")
     public String createPetitionJSP(Model model){
         return "student/create-petition";

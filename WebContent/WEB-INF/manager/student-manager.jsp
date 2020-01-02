@@ -89,7 +89,7 @@
         <input type="button" name="addStudent" id="addStudent" value="Add Student">
         <br>
 
-        <form style="display:none" id="user_creation"  name="user_creation" method="post" action="/Springmvc1_war_exploded/user/create_user_process">
+        <form style="display:none" id="user_creation"  name="user_creation" method="post" action="${pageContext.request.contextPath}/user/create_user_process">
 
             <div class="form-group">
                 <label for="username">Username</label> <br>
@@ -158,7 +158,7 @@
 
         <div style="display:none" id="update">
 
-            <form  id="user_update"  name="user_creation" method="post" action="/Springmvc1_war_exploded/user/update_student_process">
+            <form  id="user_update"  name="user_creation" method="post" action="${pageContext.request.contextPath}/user/update_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="username">Username</label> <br>
@@ -222,7 +222,7 @@
 
         <div style="display:none" id="delete">
 
-            <form  id="user_delete"  name="user_delete" method="post" action="/Springmvc1_war_exploded/user/delete_student_process">
+            <form  id="user_delete"  name="user_delete" method="post" action="${pageContext.request.contextPath}/user/delete_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="username">Username</label> <br>

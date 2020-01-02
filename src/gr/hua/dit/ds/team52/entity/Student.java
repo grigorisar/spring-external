@@ -33,18 +33,14 @@ public class Student {
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL) //if student gets deleted delete all his petitions
     private List<Petition> petitions;
 
-    public Student() {
-
-    }
-
-
-    public Student(String firstName,String lastName,String username,String dept,int year,int failed) {
+    public Student(String firstName,String lastName,String username) {
         this.firstName = firstName;
         this.lastName= lastName;
         this.username=username;
-        this.dept=dept;
-        this.year=year;
-        this.failed=failed;
+        this.petitions=null;
+    }
+
+    public Student() {
     }
 
     public int getId() {

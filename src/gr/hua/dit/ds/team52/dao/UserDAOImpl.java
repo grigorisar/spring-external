@@ -1,5 +1,8 @@
 package gr.hua.dit.ds.team52.dao;
 
+import gr.hua.dit.ds.team52.entity.Authorities;
+import gr.hua.dit.ds.team52.entity.Staff;
+import gr.hua.dit.ds.team52.entity.Student;
 import gr.hua.dit.ds.team52.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,6 +22,7 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+
     @Override
     @Transactional
     public List<User> getUserList() {
@@ -34,16 +38,40 @@ public class UserDAOImpl implements UserDAO {
         // return the results
         return users;
     }
-
     @Override
     @Transactional
-    public Boolean addUser(User user) {
+    public Boolean saveUser(User user) {
 
         try {
             Session currentsession=sessionFactory.getCurrentSession();
+            currentsession.saveOrUpdate(user);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
+        return true;
+    }
 
-            currentsession.save(user);
+    @Override
+    @Transactional
+    public Boolean deleteUser(String username) {
+        try {
+            Session currentsession=sessionFactory.getCurrentSession();
+            User user = currentsession.createQuery("from User U WHERE U.username ='"+username+"'",User.class).getSingleResult();
+            currentsession.delete(user);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    @Transactional
+    public Boolean saveAuthority(Authorities authority) {
+        try {
+            Session currentsession=sessionFactory.getCurrentSession();
+            currentsession.saveOrUpdate(authority);
         } catch (Exception e) {
             // TODO: handle exception
             return false;
@@ -51,4 +79,78 @@ public class UserDAOImpl implements UserDAO {
 
         return true;
     }
+    @Override
+    @Transactional
+    public Student getStudentByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public Staff getStaffByUsername(String username) {
+        return null;
+    }
+    @Override
+    @Transactional
+    public List<Student> getStudents(){
+        Session currentSession = sessionFactory.getCurrentSession();
+        List<Student> students = currentSession.createQuery("from Student", Student.class).getResultList();
+        return students;
+    }
+
+    @Override
+    @Transactional
+    public Boolean saveStudent(Student student) {
+        /**
+         * This function is both an UPDATE and INSERT tool.
+         * TODO CHECK BACK FOR BUGS
+         */
+
+        Session currentsession=sessionFactory.getCurrentSession();
+
+
+        //if user doesnt exist
+        if ( currentsession.createQuery("from User u WHERE u.username = '"+student.getUsername()+"'", User.class).getSingleResult().equals(null)){
+            return false;
+        }
+
+        try {
+            if (student.getId()!=0) {
+                currentsession.update(student);
+            }else {
+                currentsession.save(student);
+            }
+            return true;
+        }catch (Exception e ){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    @Override
+    @Transactional
+    public List<Staff> getStaff(){
+        Session currentSession = sessionFactory.getCurrentSession();
+        // create a query
+        List<Staff> staff = currentSession.createQuery("from Staff", Staff.class).getResultList();
+        // execute the query and get the results list
+        return staff;
+    }
+
+    @Override
+    @Transactional
+    public Boolean saveStaff(Staff staff) {
+        /**
+         * This function is both an UPDATE and INSERT tool.
+         */
+        Session currentsession=sessionFactory.getCurrentSession();
+
+        if (staff.getId()!=0) {
+            currentsession.update(staff);
+        }else {
+            currentsession.save(staff);
+        }
+        return true;
+    }
+
 }
+
