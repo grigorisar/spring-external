@@ -69,7 +69,7 @@
 
             <input type="button" name="addRole" id="addRole" value="Add Role">
             <br>
-            <form style="display:none" id="role_creation"  name="role_creation" method="post" action="/distributed_version_war_exploded/manager/create_role">
+            <form style="display:none" id="role_creation"  name="role_creation" method="post" action="${pageContext.request.contextPath}/manager/create_role">
                 <div class="form-group">
                     <label for="title">Title</label> <br>
                     <input required style="text-transform: uppercase" type="text" name="title" id="title" placeholder="Title" maxlength="50"><br>
@@ -92,7 +92,7 @@
             <input type="button" name="updateRole" id="updateRole" value="Update Selected Role">
             <br>
             <div style="display:none" id="update">
-                <form  id="role_update"  name="role_creation" method="post" action="/distributed_version_war_exploded/manager/update_role">
+                <form  id="role_update"  name="role_creation" method="post" action="${pageContext.request.contextPath}/manager/update_role">
                     <!-- style="display:none" -->
                     <div class="form-group">
                         <label for="title">Title</label> <br>
@@ -128,7 +128,7 @@
 
             <div style="display:none" id="delete">
 
-                <form  id="role_delete"  name="role_delete" method="post" action="/distributed_version_war_exploded/manager/delete_role">
+                <form  id="role_delete"  name="role_delete" method="post" action="${pageContext.request.contextPath}/manager/delete_role">
                     <!-- style="display:none" -->
                     <div class="form-group">
                         <label for="title">Title</label> <br>

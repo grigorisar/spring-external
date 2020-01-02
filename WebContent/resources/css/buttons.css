@@ -12,11 +12,14 @@ h1, h2, button{
     text-align: center;
     padding: 20px;
 }
-
-table{
-    padding-top: 120px;
-    color:#fff;
+input{
+    color: black;
 }
+
+.form-group{
+    color: #fff;
+}
+
 
 p{
     color:#fff;

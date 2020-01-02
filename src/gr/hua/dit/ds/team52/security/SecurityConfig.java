@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -40,9 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication()
                 .dataSource(myDataSource)
+                .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("select username, password, enabled "
                         + "from user "
-                        + "where username = ?")
+                        + "where username = ? and enabled <> 0")
                 .authoritiesByUsernameQuery("select username, authority "
                         + "from authorities "
                         + "where username = ?");
@@ -50,24 +53,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/access_denied").permitAll()
-//                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
-//                .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
-//                .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
-//                .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
+                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
+                .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
+                .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
+                .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable();
-
+                .formLogin()
+                .and()
+                .exceptionHandling().accessDeniedPage("/access_denied");
 //                .and()
-//                .formLogin()
-//                .and()
-//                .exceptionHandling().accessDeniedPage("/access_denied");
+//                .csrf().disable();
 
         //.loginProcessingUrl("/authUser") //TODO custom controller page
     }
@@ -81,8 +87,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
         return roles;
     }
-//public static PasswordEncoder encoder() {
-    //    return new BCryptPasswordEncoder();
-    //}
-
 }

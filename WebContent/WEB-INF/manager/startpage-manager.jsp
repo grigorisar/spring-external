@@ -20,7 +20,9 @@
 <h1>Select a Service</h1>
 <%-- NAVIGATE TO PAGE--%>
 <h2><a href="<c:url value="/manager/role"></c:url>">Role Manager</a></h2>
-<h2><a href="<c:url value="/manager/users"></c:url>">User Manager</a></h2>
+<h2><a href="<c:url value="/manager/user"></c:url>">User Manager</a></h2>
+<h2><a href="<c:url value="/manager/student"></c:url>">Student Manager</a></h2>
+<h2><a href="<c:url value="/manager/staff"></c:url>">Staff Manager</a></h2>
 <h2><a href="<c:url value="/manager/service"></c:url>">Service Manager & Role permissions</a></h2>
 </body>
 </html>

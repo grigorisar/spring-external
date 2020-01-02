@@ -320,7 +320,7 @@
                     // alert(err.Message);
                     let err = xhr.responseText;
                     alert(err);
-                    $('#bottom1').empty().append("Error Encountered with request " + error)
+                    $('#bottom1').empty().append("Error Encountered with request " + error);
                     window.location.reload();
 
                 },

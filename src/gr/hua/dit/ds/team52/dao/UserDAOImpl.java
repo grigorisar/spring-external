@@ -68,7 +68,10 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     @Transactional
-    public Boolean saveAuthority(Authorities authority) {
+    public Boolean saveAuthority(String username, String role) {
+        Authorities authority = new Authorities();
+        authority.setUsername(username);
+        authority.setRole(role);
         try {
             Session currentsession=sessionFactory.getCurrentSession();
             currentsession.saveOrUpdate(authority);
@@ -76,19 +79,20 @@ public class UserDAOImpl implements UserDAO {
             // TODO: handle exception
             return false;
         }
-
         return true;
     }
     @Override
     @Transactional
     public Student getStudentByUsername(String username) {
-        return null;
+        Session currentsession=sessionFactory.getCurrentSession();
+        return currentsession.createQuery("from Student S where S.username ='"+username+"'", Student.class).getSingleResult();
     }
 
     @Override
     @Transactional
     public Staff getStaffByUsername(String username) {
-        return null;
+        Session currentsession=sessionFactory.getCurrentSession();
+        return currentsession.createQuery("from Staff S where S.username ='"+username+"'", Staff.class).getSingleResult();
     }
     @Override
     @Transactional
@@ -105,14 +109,7 @@ public class UserDAOImpl implements UserDAO {
          * This function is both an UPDATE and INSERT tool.
          * TODO CHECK BACK FOR BUGS
          */
-
         Session currentsession=sessionFactory.getCurrentSession();
-
-
-        //if user doesnt exist
-        if ( currentsession.createQuery("from User u WHERE u.username = '"+student.getUsername()+"'", User.class).getSingleResult().equals(null)){
-            return false;
-        }
 
         try {
             if (student.getId()!=0) {

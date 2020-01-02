@@ -43,10 +43,6 @@
 
 </head>
 <body>
-
-<br>
-
-
 <table id="table" class="display"  align="center">
     <thead>
     <tr>
@@ -110,7 +106,7 @@
             </div>
 
             <div  class="form-group" id="PositionDiv">
-                <label for="position">Department</label><br>
+                <label for="position">Position Title</label><br>
                 <input required type="text" name="position" id="position" placeholder="Position Title" maxlength="45"><br>
 
             </div>
@@ -119,9 +115,8 @@
                 <input required type="submit" class="button" value = "Submit" id="create">
             </div>
 
-            <div  class="form-group" >
-                <input hidden type="text" required name="role" id="role" value="Staff" ><br>
-            </div>
+            <input hidden type="text" required name="role" id="role" value="Staff" ><br>
+
             <!-- for the jquery ajax post request -->
             <input type="hidden"
                    name="${_csrf.parameterName}"
@@ -172,9 +167,8 @@
                     <input hidden type="text" required name="role" id="role_u" value="Staff" ><br>
                 </div>
 
-                <div class="form-group">
-                    <input required type="submit" class="button" value = "Update" id="updateB">
-                </div>
+                <input required type="submit" class="button" value = "Update" id="updateB">
+
 
                 <input type="hidden"
                        name="${_csrf.parameterName}"

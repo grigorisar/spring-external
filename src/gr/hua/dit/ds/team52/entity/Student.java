@@ -25,10 +25,10 @@ public class Student {
     private String dept;
 
     @Column(name = "year")
-    private Integer year;
+    private int year;
 
     @Column(name = "failed")
-    private Integer failed;
+    private int failed;
 
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL) //if student gets deleted delete all his petitions
     private List<Petition> petitions;

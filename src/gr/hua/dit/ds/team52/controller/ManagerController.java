@@ -44,27 +44,22 @@ public class ManagerController {
         return "manager/startpage-manager";
     }
 
-    @RequestMapping("/users")
-    public String userStartpage(Model model) {
-        return "manager/startpage-user";
-    }
-
-    @RequestMapping("/users/user")
+    @RequestMapping("/user")
     public String userManager(Model model) {
          //DISABLE ENABLE USERS ONLY
         List<User> users = userDAO.getUserList();
         model.addAttribute("users",users);
-        return "user-startpage";
+        return "manager/list-user";
     }
 
-    @RequestMapping("/users/student")
+    @RequestMapping("/student")
     public String studentManager(Model model) {
         List<Student> students = userDAO.getStudents();
         model.addAttribute("students", students);
         return "manager/student-manager";
     }
 
-    @RequestMapping("/users/staff")
+    @RequestMapping("/staff")
     public String staffManager(Model model) {
         List<Staff> staff = userDAO.getStaff();
         model.addAttribute("staff", staff);
@@ -215,26 +210,15 @@ public class ManagerController {
         return "Registration Successful";
     }
 
-
     @ResponseBody
     @PostMapping(value = "/update_user_process", produces = "plain/text")
     public String updateUser(WebRequest request ) {
 
-
-        String role ="ROLE_"+request.getParameter("role").toUpperCase();
         String username = request.getParameter("username");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String old_username = request.getParameter("old_username");     //delete this later
-
-        User user = new User();                                     //insert the data into the user table first
-        user.setUsername(username); //TODO CHECK BACK ON THIS FOR PASSWORD
-
-        //        v = userDAO.updateUser(user);         //If you find a way change it
-            //                Authorities authority = new Authorities();
-            //                authority.setAuthority(role);
-            //                authority.setUsername(username);
-            //                userDAO.updateAuthority(authority);
+        String role ="ROLE_"+request.getParameter("role").toUpperCase();
 
         if (role.contentEquals("ROLE_STUDENT" ) ) {             //check if it's a student or staff
             Student student =userDAO.getStudentByUsername(old_username);
@@ -257,19 +241,21 @@ public class ManagerController {
 
             userDAO.saveStaff(staff);
         }
-        return "Cannot Find Role";
+
+        userDAO.saveAuthority(username,role); // necessary to bind role to user
+
+        return "Staff updated";
     }
 
     @ResponseBody
     @PostMapping(value = "/delete_user_process", produces = "plain/text")
-    public String deleteStudent(WebRequest request ,HttpServletResponse response ,Model model) {
+    public String deleteUser(WebRequest request ,HttpServletResponse response ,Model model) {
 
         boolean v = false;
         String username = request.getParameter("username");
 //        String role = request.getParameter("role_d");
         try {
             v = userDAO.deleteUser(username);
-
         } catch (Exception e) {
 
         }

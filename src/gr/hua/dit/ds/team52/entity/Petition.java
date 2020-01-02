@@ -6,14 +6,14 @@ import javax.persistence.*;
 @Table(name = "petition")
 public class Petition {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private String id;
 
     @Column(name = "title", nullable = true, length = 45)
     private String title;
 
-    @Column(name = "description", nullable = true, length = -1)
+    @Column(name = "description", nullable = true)
     private String description;
 
     @Column(name = "status", nullable = false, length = 8)

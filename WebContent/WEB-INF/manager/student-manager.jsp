@@ -44,10 +44,9 @@
 
 </head>
 <body>
-
+<link type="text/css" rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/css/buttons.css"/>
 <br>
-
-
 <table id="table" class="display"  align="center">
     <thead>
     <tr>
@@ -89,7 +88,7 @@
         <input type="button" name="addStudent" id="addStudent" value="Add Student">
         <br>
 
-        <form style="display:none" id="user_creation"  name="user_creation" method="post" action="${pageContext.request.contextPath}/user/create_user_process">
+        <form style="display:none" id="user_creation"  name="user_creation" method="post" action="${pageContext.request.contextPath}/manager/create_user_process">
 
             <div class="form-group">
                 <label for="username">Username</label> <br>
@@ -132,9 +131,7 @@
 
             </div>
 
-            <div class="form-group">
-                <input required type="submit" class="button" value = "Submit" id="create">
-            </div>
+            <input required type="submit" class="button" value = "Submit" id="create">
 
             <div  class="form-group" >
                 <input hidden type="text" required name="role" id="role" value="Student" ><br>
@@ -158,7 +155,7 @@
 
         <div style="display:none" id="update">
 
-            <form  id="user_update"  name="user_creation" method="post" action="${pageContext.request.contextPath}/user/update_user_process">
+            <form  id="user_update"  name="user_creation" method="post" action="${pageContext.request.contextPath}/manager/update_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="username">Username</label> <br>
@@ -179,7 +176,7 @@
 
                 <div  class="form-group" >
                     <label for="year">Year</label><br>
-                    <input required step="1" type="text" pattern="\d+" name="year_u" id="year_u" placeholder="Year" maxlength="5"><br>
+                    <input required step="1" type="number" pattern="\d+" name="year" id="year_u" placeholder="Year" maxlength="5"><br>
 
                 </div>
 
@@ -200,8 +197,10 @@
 
                 </div>
 
-                <div class="form-group">
-                    <input required type="submit" class="button" value = "Update" id="updateB">
+                <input required type="submit" class="button" value = "Update" id="updateB">
+
+                <div  class="form-group" >
+                    <input hidden type="text" required name="role" id="role_u" value="Student" ><br>
 
                 </div>
 
@@ -222,11 +221,15 @@
 
         <div style="display:none" id="delete">
 
-            <form  id="user_delete"  name="user_delete" method="post" action="${pageContext.request.contextPath}/user/delete_user_process">
+            <form  id="user_delete"  name="user_delete" method="post" action="${pageContext.request.contextPath}/manager/delete_user_process">
                 <!-- style="display:none" -->
                 <div class="form-group">
                     <label for="username">Username</label> <br>
-                    <input required type="text" name="username_d" id="username_d" placeholder="Username" maxlength="50"><br>
+                    <input required type="text" name="username" id="username_d" placeholder="Username" maxlength="50"><br>
+                </div>
+                <div  class="form-group" >
+                    <input hidden type="text" required name="role" id="role_d" value="Student" ><br>
+
                 </div>
 
                 <input type="submit" name="confirm" id="confirm" value="Confirm">
@@ -342,7 +345,7 @@
             } else {
                 $("#delete").hide();
                 $('#delete').trigger("reset");    //reset form
-                $('#bottom3').empty();
+                // $('#bottom3').empty();
 
             }
 
@@ -370,18 +373,19 @@
                 success: function(data) {                                   //on success of ajax
                     //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
                     console.log("posting sucessful");
-                    $("#bottom1").empty().append(data)
+                    $("#bottom1").empty().append(data);
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {                                 //on error
                     //  = eval("(" + xhr.responseText + ")");       //eval is evil dont use it
                     // alert(err.Message);
-                    let err = xhr.responseText
-                    alert(err)
-                    $('#bottom1').empty().append("Error Encountered with request " + error)
+                    let err = xhr.responseText;
+                    alert(err);
+                    $('#bottom1').empty().append("Error Encountered with request " + error);
 
                 },
                 complete: function () {                             //on completion
-                    console.log("creation finished")
+                    console.log("creation finished");
                 }
             });
 
@@ -400,17 +404,17 @@
                 data : $('#user_update').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {
-                    console.log("posting sucessful")
-                    $("#bottom2").empty().append(data)
+                    console.log("posting sucessful");
+                    $("#bottom2").empty().append(data);
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {
-                    var err = xhr.responseText
-                    alert(err)
-                    $('#bottom2').empty().append("Error Encountered with request " + error)
-
+                    var err = xhr.responseText;
+                    alert(err);
+                    $('#bottom2').empty().append("Error Encountered with request " + error);
                 },
                 complete: function () {                             //on completion
-                    console.log("update finished")
+                    console.log("update finished");
                 }
             });
 
@@ -434,17 +438,17 @@
                 data : $('#user_delete').serialize(),
                 // dataType: "plain/text",
                 success: function(data) {
-                    console.log("posting sucessful")
-                    $("#bottom3").empty().append(data)
+                    console.log("posting sucessful");
+                    $("#bottom3").empty().append(data);
+                    window.location.reload();
                 },
                 error: function(xhr, request, error) {
-                    var err = xhr.responseText
-                    alert(err)
-                    $('#bottom3').empty().append("Error Encountered with request " + error)
-
+                    var err = xhr.responseText;
+                    alert(err);
+                    $('#bottom3').empty().append("Error Encountered with request " + error);
                 },
                 complete: function () {                             //on completion
-                    console.log("deletion finished")
+                    console.log("deletion finished");
                 }
             });
 

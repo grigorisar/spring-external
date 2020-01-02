@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    public Boolean saveAuthority(Authorities authority);//TODO MAYBE DELETE THIS LATER
+    public Boolean saveAuthority(String username,String role);//TODO MAYBE DELETE THIS LATER
 
     public List<User> getUserList();
     public Boolean saveUser(User user);
