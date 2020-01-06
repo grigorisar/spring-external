@@ -24,4 +24,6 @@ public interface UserDAO {
     public Staff getStaffByUsername(String username);
 
 
+    public boolean addStudent(String username, String password, String firstname, String lastname, String role, int failed, String dept, String year); //delete this later
+    public boolean addStaff(String username, String password, String firstname, String lastname, String role, String position); //delete later
 }

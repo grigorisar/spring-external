@@ -30,14 +30,14 @@ public class Student {
     @Column(name = "failed")
     private int failed;
 
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL) //if student gets deleted delete all his petitions
-    private List<Petition> petitions;
+//    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL) //if student gets deleted delete all his petitions
+//    private List<Petition> petitions;
 
     public Student(String firstName,String lastName,String username) {
         this.firstName = firstName;
         this.lastName= lastName;
         this.username=username;
-        this.petitions=null;
+//        this.petitions=null;
     }
 
     public Student() {
@@ -99,13 +99,13 @@ public class Student {
         this.username = username;
     }
 
-    public void add(Petition apetition) {
-        if(petitions == null) {
-            petitions = new ArrayList<>();
-        }
-        petitions.add(apetition);
-        apetition.setStudent(this);
-    }
+//    public void add(Petition apetition) {
+//        if(petitions == null) {
+//            petitions = new ArrayList<>();
+//        }
+//        petitions.add(apetition);
+//        apetition.setStudent(this);
+//    }
 
     public boolean canSubmit(){
         return getYear() >= 3 && getFailed() <= 3;

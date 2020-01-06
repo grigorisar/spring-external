@@ -41,7 +41,7 @@ public class StudentController {
         return "student/create-petition";
     }
 
-    @ResponseBody
+    /*@ResponseBody
     @PostMapping(value = "/create_petition_process")
     public String createPetition(WebRequest request) {
         Petition petition = new Petition();
@@ -64,6 +64,44 @@ public class StudentController {
             return "No rights to create petition";
         }
         return "Petition successfully added";
+    }*/
+
+    @ResponseBody
+    @PostMapping(value = "/create_petition_process", produces = "plain/text")
+    public String createPetition(WebRequest request , HttpServletResponse response , Model model) {
+        String title = request.getParameter("title");
+
+        String description = request.getParameter("description");
+
+        String currentUserName = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {            //not 100% sure what this if is about  TODO check this condition
+            currentUserName = authentication.getName();                             //get the logged in user's username
+        }
+
+        List<Student> list = studentDAO.getStudent(currentUserName);    //find the rest of the logged-in student's credentials
+
+        int year = list.get(0).getYear();   //usernames are unique we can safely the first one from the list
+
+        int failedClasses = list.get(0).getFailed();
+
+        if ( (year != 3 && year != 4) && failedClasses > 3) {       //check if the student can petition
+            return "Student cannot petition!";
+        } else {
+
+            Petition p = new Petition(title, description, "doesn't matter");
+
+            p.setStudent_username(currentUserName);
+            boolean v = studentDAO.savePetition(p);
+
+            if ( v ) return "Petition successfully added";
+
+            return "Petition with the same title already exists";
+        }
+
+
+
     }
 
 

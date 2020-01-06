@@ -149,5 +149,63 @@ public class UserDAOImpl implements UserDAO {
         return true;
     }
 
+
+//    =================================================================================================
+    // switch out this one later
+    @Override
+    @Transactional
+    public boolean addStudent(String username, String password, String firstname, String lastname, String role, int failed, String dept, String year) {
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+//        UserEntity e = new UserEntity();
+//        StudentEntity s =new StudentEntity();
+
+        try {
+
+            int q = currentSession.createSQLQuery("INSERT INTO `user` (`username`, `password`, `enabled`) VALUES ( '" + username + "' , '" + password + "' ,  '1')").executeUpdate();
+
+            System.out.println(q);
+
+            q = currentSession.createSQLQuery("INSERT INTO `student` (`id`, `first_name`, `last_name`, `username`, `dept`, `year`, `failed`) VALUES ( NULL, '" + firstname + "', '" +
+                    lastname + "', '" + username + "', '" + dept + "', '" + year + "', '" + year + "');").executeUpdate();
+
+            System.out.println(q);
+
+            q = currentSession.createSQLQuery("INSERT INTO authorities (username, authority) VALUES ('" + username +"', '" + role + "') ").executeUpdate();
+
+            System.out.println(q);
+
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+
+    }
+
+    @Override
+    @Transactional
+    public boolean addStaff(String username, String password, String firstname, String lastname, String role, String position) {
+        // get current hibernate session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+//        UserEntity e = new UserEntity();
+//        StudentEntity s =new StudentEntity();
+
+        try {
+
+            int q = currentSession.createSQLQuery("INSERT INTO `user` (`username`, `password`, `enabled`) VALUES ( '" + username + "' , '" + password + "' ,  '1')").executeUpdate();
+
+            q = currentSession.createSQLQuery("INSERT INTO `staff` (`id`, `first_name`, `last_name`, `username`, `position`) VALUES ( NULL, '" + firstname + "', '" +
+                    lastname + "', '" + username + "', '" + position + "');").executeUpdate();
+
+            q = currentSession.createSQLQuery("INSERT INTO authorities (username, authority) VALUES ('" + username +"', '" + role + "') ").executeUpdate();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+
+    }
+
 }
 

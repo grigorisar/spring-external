@@ -34,14 +34,14 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     @Transactional
-    public Boolean savePetition(Petition petition,String studentID) {
+    public Boolean savePetition(Petition petition) {
         /**
          * This function is an INSERT tool ONLY.
          */
         try {
             Session currentsession=sessionFactory.getCurrentSession();
-            Student student = currentsession.get(Student.class,studentID);
-            petition.setStudent(student);
+//            Student student = currentsession.get(Student.class,studentID);
+//            petition.setStudent(student);
 
             currentsession.save(petition);
         } catch (Exception e) {
@@ -50,5 +50,21 @@ public class StudentDAOImpl implements StudentDAO {
         }
 
         return true;
+    }
+
+    @Override
+    @Transactional
+    public List<Student> getStudent(String username) {
+
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        System.out.println(username);
+
+        String hql = "FROM Student E WHERE E.username = :username";
+        Query query = currentSession.createQuery(hql);
+        query.setParameter("username",username);
+        List<Student> results = query.list();
+
+        return results;
     }
 }

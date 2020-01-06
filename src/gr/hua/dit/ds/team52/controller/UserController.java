@@ -1,11 +1,17 @@
 package gr.hua.dit.ds.team52.controller;
 
 import gr.hua.dit.ds.team52.dao.UserDAO;
+import gr.hua.dit.ds.team52.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -16,14 +22,11 @@ public class UserController {
     @Autowired
     UserDAO userDAO;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+
     @RequestMapping("/")
     public String showMyPage() {
         return "startpage";
-    }
-
-    @RequestMapping("/create")
-    public String createUser() {
-        return "manager/create-user";
     }
 
 

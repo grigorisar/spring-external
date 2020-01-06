@@ -16,13 +16,24 @@ public class Petition {
     @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "status", nullable = false, length = 8)
-    private String status;
+    public String getStudent_username() {
+        return student_username;
+    }
 
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="student_id")
-    private Student student;
+    public void setStudent_username(String student_username) {
+        this.student_username = student_username;
+    }
+
+    @Column(name = "student_username")
+    private String student_username;
+
+//    @Column(name = "status", nullable = false, length = 8)
+//    private String status;
+
+//    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinColumn(name="student_id")
+//    private Student student;
 
     public Petition() {
 
@@ -30,7 +41,7 @@ public class Petition {
     public Petition(String title,String description,String status){
         this.title = title;
         this.description = description;
-        this.status = status;
+//        this.status = status;
     }
 
     public String getId() {
@@ -57,20 +68,20 @@ public class Petition {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
+//    public String getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(String status) {
+//        this.status = status;
+//    }
+//
+//    public Student getStudent() {
+//        return student;
+//    }
+//
+//    public void setStudent(Student student) {
+//        this.student = student;
+//    }
 
 }

@@ -21,6 +21,11 @@ public class StaffController {
     @Autowired
     private StaffDAO staffDAO;
 
+    @RequestMapping("/")
+    public String showOptions(Model model){
+        return "staff/startpage-staff";
+    }
+
     @RequestMapping("/petition_list")
     public String listPetitions(Model model){
 
@@ -37,13 +42,30 @@ public class StaffController {
     public String listInternships(Model model){
 
         // get customers from dao
-        List<Internship> internships = staffDAO.getInternships();
+        List<Internship> internshipsP = staffDAO.getInternshipsPending();
+        List<Internship> internshipsA = staffDAO.getInternshipsAccepted();
 
         // add the customers to the model
-        model.addAttribute("internships", internships);
+        model.addAttribute("internshipsPending", internshipsP);
+        model.addAttribute("internshipsAccepted", internshipsA);
 
         return "staff/list-internships";
     }
+
+    @ResponseBody
+    @PostMapping(value = "/accept_internship_process", produces = "plain/text")
+    public String createUser(WebRequest request ) {
+
+        String title = request.getParameter("title");
+
+        boolean v = staffDAO.acceptInternship(title);
+
+        if ( v ) return "Internship successfully accepted";
+
+        return "Internship with given title is already accepted or it doesn't exist";
+    }
+
+
 
 
 

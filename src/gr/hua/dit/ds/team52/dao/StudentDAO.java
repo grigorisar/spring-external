@@ -8,6 +8,8 @@ import java.util.List;
 public interface StudentDAO {
 
     public List<Petition> getPetitions();
-    public Boolean savePetition(Petition petition,String studentUsername);
+    public Boolean savePetition(Petition petition);
+//            ,String studentUsername);             add this later
+    public List<Student> getStudent(String username);  //probably not needed later on
 
 }

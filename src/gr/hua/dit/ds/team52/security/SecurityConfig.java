@@ -43,10 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(myDataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("select username, password, enabled "
+                .usersByUsernameQuery("select username, password, enabled "     //table to find the user
                         + "from user "
                         + "where username = ? and enabled <> 0")
-                .authoritiesByUsernameQuery("select username, authority "
+                .authoritiesByUsernameQuery("select username, authority "       //table to find the role of user
                         + "from authorities "
                         + "where username = ?");
 
@@ -63,7 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/access_denied").permitAll()
-                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))               //should not start with _ROLE
+                .antMatchers("/login").permitAll()
+                .antMatchers("/create").permitAll()                         //for the create user page
+                .antMatchers("/create_user_process").permitAll()            //and permit the user creation process
+                .antMatchers("/manager/**").hasAnyRole(fetchServiceRoles("Manage Application"))
                 .antMatchers("/student/**").hasAnyRole(fetchServiceRoles("Create Petition"))
                 .antMatchers("/staff/petition_list/**").hasAnyRole(fetchServiceRoles("Examine Petitions"))
                 .antMatchers("/staff/internship_list/**").hasAnyRole(fetchServiceRoles("Examine Internships"))
