@@ -93,7 +93,7 @@ public class ManagerController {
     public String createRole(WebRequest request ) {
         Role role = new Role();
         //set title id will auto generate
-        role.setTitle(request.getParameter("title"));
+        role.setTitle(request.getParameter("title").toUpperCase());
 
         serviceDAO.saveRole(role);
         return "Role Added.";
@@ -104,7 +104,7 @@ public class ManagerController {
     public String updateRole(WebRequest request ) {
         //search
         Role role = serviceDAO.getRoleByName(request.getParameter("old_title"));
-        role.setTitle(request.getParameter("title"));
+        role.setTitle(request.getParameter("title").toUpperCase());
         serviceDAO.saveRole(role);
         return "Role Updated.";
     }

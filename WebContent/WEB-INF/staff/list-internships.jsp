@@ -124,10 +124,9 @@
     <form align="center" class="pure-form-stacked" id="internship" name="internship" method="post" action="${pageContext.request.contextPath}/staff/accept_internship_process">
 
         <div class="form-group">
-            <label for="title">Title</label> <br>
-            <input required type="text" name="title" id="title" placeholder="Title" maxlength="50"><br>
+            <label for="title">Title</label>
+            <input style="align-self: center" required type="text" name="title" id="title" placeholder="Title" maxlength="50">
         </div>
-        <br>
 
         <div class="form-group">
             <input type="button" class="pure button" value = "Get Selected" id="get_title">

@@ -80,16 +80,8 @@ public class StudentController {
             currentUserName = authentication.getName();                             //get the logged in user's username
         }
 
-        List<Student> list = studentDAO.getStudent(currentUserName);    //find the rest of the logged-in student's credentials
-
-        int year = list.get(0).getYear();   //usernames are unique we can safely the first one from the list
-
-        int failedClasses = list.get(0).getFailed();
-
-        if ( (year != 3 && year != 4) && failedClasses > 3) {       //check if the student can petition
-            return "Student cannot petition!";
-        } else {
-
+        Student student = userDAO.getStudentByUsername(currentUserName);
+        if (student.canSubmit()){ //if true
             Petition p = new Petition(title, description, "doesn't matter");
 
             p.setStudent_username(currentUserName);
@@ -98,10 +90,9 @@ public class StudentController {
             if ( v ) return "Petition successfully added";
 
             return "Petition with the same title already exists";
+        } else { //if false
+            return "Student cannot petition!";
         }
-
-
-
     }
 
 
