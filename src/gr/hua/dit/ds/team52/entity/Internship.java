@@ -1,9 +1,8 @@
 package gr.hua.dit.ds.team52.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "internship")
@@ -21,8 +20,13 @@ public class Internship {
     @Column(name = "status")
     private String status;
 
-//    @Column(name = "approved")
-//    private boolean approved;
+    //Company of internships
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH})
+    private Rep rep;
+
+    //Petitions for the position
+    @OneToMany(mappedBy = "petition",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Petition> petitions;
 
     public Internship() {
     }
@@ -62,8 +66,26 @@ public class Internship {
         this.status = status;
     }
 
+    public Rep getRep() {
+        return rep;
+    }
 
-//    public boolean getApproved() {
+    public void setRep(Rep rep) {
+        this.rep = rep;
+    }
+
+    public List<Petition> getPetitions() {
+        return petitions;
+    }
+
+    public void addPetition(Petition petition) {
+        if (petitions == null){
+            petitions = new ArrayList<>();
+        }
+        this.petitions.add(petition);
+    }
+
+    //    public boolean getApproved() {
 //        return approved;
 //    }
 //

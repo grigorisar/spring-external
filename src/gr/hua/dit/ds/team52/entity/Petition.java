@@ -68,6 +68,7 @@ public class Petition {
         this.description = description;
     }
 
+
 //    public String getStatus() {
 //        return status;
 //    }
