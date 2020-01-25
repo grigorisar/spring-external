@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
     public Boolean saveUser(User user) {
 
         try {
-            Session currentsession=sessionFactory.getCurrentSession();
+            Session currentsession= sessionFactory.getCurrentSession();
             currentsession.saveOrUpdate(user);
         } catch (Exception e) {
             // TODO: handle exception
@@ -56,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public Boolean deleteUser(String username) {
         try {
-            Session currentsession=sessionFactory.getCurrentSession();
+            Session currentsession= sessionFactory.getCurrentSession();
             User user = currentsession.createQuery("from User U WHERE U.username ='"+username+"'",User.class).getSingleResult();
             currentsession.delete(user);
         } catch (Exception e) {

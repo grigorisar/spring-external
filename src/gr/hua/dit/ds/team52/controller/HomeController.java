@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
 
@@ -29,6 +29,7 @@ public class HomeController {
     @RequestMapping("/")
     public String showfirstpage() {
         return "home/startpage";
+//        return "internship/internship";
     }
 
     @RequestMapping("/create")

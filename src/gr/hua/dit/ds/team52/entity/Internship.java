@@ -8,27 +8,38 @@ import java.util.List;
 @Table(name = "internship")
 public class Internship {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
     @Column(name = "title")
     private String title;
-
     @Column(name = "description")
     private String description;
-
     @Column(name = "salary")
     private int salary;
-
     @Column(name = "status")
     private String status;
 
     //Company of internships
-    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH})
-    private Rep rep;
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_name")
+    private Company company;
 
     //Petitions for the position
-    @OneToMany(mappedBy = "petition",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "internship",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Petition> petitions;
 
-    public Internship() {
+    public Internship(){};
+    public Internship(String title, String description, String status, int salary) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.salary = salary;
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -66,12 +77,12 @@ public class Internship {
         this.status = status;
     }
 
-    public Rep getRep() {
-        return rep;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setRep(Rep rep) {
-        this.rep = rep;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public List<Petition> getPetitions() {

@@ -19,16 +19,18 @@
     <br>
     <form class="pure-form-stacked" id="petition_details" name="petition_creation" method="post" action="${pageContext.request.contextPath}/student/create_petition_process">
 
+
         <div class="form-group">
-            <label for="title">Title</label> <br>
             <input required type="text" name="title" id="title" placeholder="Title" maxlength="50"><br>
         </div>
         <br>
 
         <div class="form-group">
-            <label for="description">Description</label><br>
             <input required type="text" name="description" id="description" placeholder="Description" maxlength="200"><br>
+        </div>
 
+        <div class="form-group">
+            <input required type="text" name="internship" id="internship_name" placeholder="Internship" maxlength="200"><br>
         </div>
 
         <div class="form-group">

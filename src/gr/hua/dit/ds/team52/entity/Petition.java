@@ -8,32 +8,26 @@ public class Petition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private int id;
 
     @Column(name = "title", nullable = true, length = 45)
     private String title;
-
+    @Column(name = "student_username")
+    private String student_username;
+    @Column(name = "status", nullable = false, length = 8)
+    private String status;
     @Column(name = "description", nullable = true)
     private String description;
 
-    public String getStudent_username() {
-        return student_username;
-    }
-
-    public void setStudent_username(String student_username) {
-        this.student_username = student_username;
-    }
-
-    @Column(name = "student_username")
-    private String student_username;
-
-//    @Column(name = "status", nullable = false, length = 8)
-//    private String status;
-
-//    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
+    @JoinColumn(name="internship_id")
+    private Internship internship;
+    //    private Student student;
 //    @JoinColumn(name="student_id")
-//    private Student student;
+//    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+//    @Column(name = "company", nullable = true)
+//    private String company;
+
 
     public Petition() {
 
@@ -44,11 +38,11 @@ public class Petition {
 //        this.status = status;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -68,21 +62,24 @@ public class Petition {
         this.description = description;
     }
 
+    public void setInternship(Internship internship) {
+        this.internship = internship;
+    }
 
-//    public String getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(String status) {
-//        this.status = status;
-//    }
-//
-//    public Student getStudent() {
-//        return student;
-//    }
-//
-//    public void setStudent(Student student) {
-//        this.student = student;
-//    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStudent_username() {
+        return student_username;
+    }
+
+    public void setStudent_username(String student_username) {
+        this.student_username = student_username;
+    }
 
 }
