@@ -26,7 +26,7 @@
                     <c:forEach var="company" items="${companies}">
                     <optgroup label="${company.companyName}">
                             <c:forEach var="internship" items="${company.internships}">
-                                <option value="${internship.name}"
+                                <option value="${internship.name}">
                             </c:forEach>
                     </c:forEach>
                 </select>
