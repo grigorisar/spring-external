@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header-footer.css">
 <title>Application</title>
 <body>
@@ -21,7 +22,14 @@
             <h1>Internship proposal</h1>
             <form>
                 <input type="text" name="title" placeholder="Position Title" />
-                <input type="text" name="company" placeholder="Company Name" />
+                <select name="company" id="company">
+                    <c:forEach var="company" items="${companies}">
+                    <optgroup label="${company.companyName}">
+                            <c:forEach var="internship" items="${company.internships}">
+                                <option value="${internship.name}"
+                            </c:forEach>
+                    </c:forEach>
+                </select>
                 <input type="number" name="salary" placeholder="Salary / Per Year">
                 <textarea name="description" placeholder="Internship Description and Requirements"></textarea>
                 <input type="text" name="comments" placeholder="Additional Comments">
